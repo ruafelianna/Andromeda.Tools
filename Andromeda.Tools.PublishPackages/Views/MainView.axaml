@@ -47,13 +47,32 @@
                     Command="{Binding CmdAddFolder}"/>
           </StackPanel>
 
-          <ItemsControl ItemsSource="{Binding Folders}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding}"/>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
+          <StackPanel Orientation="Horizontal">
+            <Button Content="Refresh"
+                  Command="{Binding CmdListPackages}"/>
+
+            <Button Content="Remove selected"
+                    Command="{Binding CmdRemoveFolders}"/>
+          </StackPanel>
+
+          <TreeView ItemsSource="{Binding Folders}">
+            <ItemsControl.DataTemplates>
+              <TreeDataTemplate DataType="vm:FolderItem"
+                                ItemsSource="{Binding Packages}">
+                <StackPanel Orientation="Horizontal">
+                  <CheckBox IsChecked="{Binding IsSelected}"/>
+                  <TextBlock Text="{Binding Name}"/>
+                </StackPanel>
+              </TreeDataTemplate>
+
+              <TreeDataTemplate DataType="vm:PackageItem">
+                <StackPanel Orientation="Horizontal">
+                  <CheckBox IsChecked="{Binding IsSelected}"/>
+                  <TextBlock Text="{Binding Name}"/>
+                </StackPanel>
+              </TreeDataTemplate>
+            </ItemsControl.DataTemplates>
+          </TreeView>
 
         </StackPanel>
 

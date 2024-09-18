@@ -28,4 +28,8 @@
     </Style>
   </Style>
 
+  <Style Selector="TreeViewItem">
+    <Setter Property="IsExpanded" Value="True"/>
+  </Style>
+
 </Styles>

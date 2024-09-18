@@ -1,4 +1,5 @@
 using Andromeda.Tools.PublishPackages.Interactions;
+using Andromeda.Tools.PublishPackages.Properties;
 using BaGet.Protocol;
 using BaGet.Protocol.Models;
 using DynamicData;
@@ -17,6 +18,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
     {
         public MainViewModel()
         {
+            var settings = Settings.Instance;
+
             Servers = [
                 "https://localhost:7183/v3/index.json",
             ];
@@ -34,14 +37,20 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
             // ----------------------------------------------
 
-            _foldersCache = new(x => x);
+            _foldersCache = new(x => x.Name);
 
             _foldersCache
                 .Connect()
-                .SortBy(x => x)
+                .SortBy(x => x.Name)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _folders)
                 .Subscribe();
+
+            _foldersCache.AddOrUpdate(
+                Settings.Instance.Folders
+                    .Cast<string>()
+                    .Select(x => new FolderItem(x))
+            );
 
             // ----------------------------------------------
 
@@ -112,11 +121,60 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
             CmdAddFolder = ReactiveCommand
                 .Create(
                     () => {
-                        _foldersCache.AddOrUpdate(SelectedFolder!);
+                        _foldersCache.AddOrUpdate(
+                            new FolderItem(SelectedFolder!)
+                        );
+
+                        var settings = Settings.Instance;
+
+                        if (!settings.Folders.Contains(SelectedFolder))
+                        {
+                            settings.Folders.Add(SelectedFolder);
+                        }
+
+                        settings.Save();
+
                         SelectedFolder = null;
                     },
                     canAddFolder
                 );
+
+            // ----------------------------------------------
+
+            CmdListPackages = ReactiveCommand.CreateFromTask(async () =>
+            {
+                foreach (var item in Folders)
+                {
+                    await item.CmdUpdate.Execute();
+                }
+            });
+
+            // ----------------------------------------------
+
+            CmdRemoveFolders = ReactiveCommand.Create<Unit, IEnumerable<string>>(
+                _ => {
+                    var selected = _folders
+                        .Where(x => x.IsSelected)
+                        .Select(x => x.Name)
+                        .ToArray();
+
+                    _foldersCache.RemoveKeys(selected);
+
+                    return selected;
+                }
+            );
+
+            CmdRemoveFolders
+                .Subscribe(list => {
+                    var settings = Settings.Instance;
+
+                    foreach (var item in list)
+                    {
+                        settings.Folders.Remove(item);
+                    }
+
+                    settings.Save();
+                });
         }
 
         public IEnumerable<string> Servers { get; }
@@ -125,9 +183,9 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         private readonly ReadOnlyObservableCollection<SearchResult> _searchResults;
         public IEnumerable<SearchResult> SearchResults => _searchResults;
 
-        private readonly SourceCache<string, string> _foldersCache;
-        private readonly ReadOnlyObservableCollection<string> _folders;
-        public IEnumerable<string> Folders => _folders;
+        private readonly SourceCache<FolderItem, string> _foldersCache;
+        private readonly ReadOnlyObservableCollection<FolderItem> _folders;
+        public IEnumerable<FolderItem> Folders => _folders;
 
         [Reactive]
         public string? SelectedServer { get; set; }
@@ -143,6 +201,10 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         public ReactiveCommand<Unit, string?> CmdChooseFolder { get; }
 
         public ReactiveCommand<Unit, Unit> CmdAddFolder { get; }
+
+        public ReactiveCommand<Unit, Unit> CmdListPackages { get; }
+
+        public ReactiveCommand<Unit, IEnumerable<string>> CmdRemoveFolders { get; }
 
         private NuGetClient NewClient => new(SelectedServer);
     }
