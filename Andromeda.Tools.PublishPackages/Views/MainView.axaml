@@ -7,27 +7,62 @@
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
              x:DataType="vm:MainViewModel">
   <StackPanel>
-    <StackPanel Orientation="Horizontal">
-      <ComboBox SelectedItem="{Binding SelectedServer}"
+    <ComboBox SelectedItem="{Binding SelectedServer}"
               ItemsSource="{Binding Servers}"/>
 
-      <Button Command="{Binding CmdUpdate}"
-              Content="Update"/>
-    </StackPanel>
+    <TabControl>
 
-    <ItemsControl ItemsSource="{Binding SearchResults}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
+      <TabItem Header="Search">
+        <StackPanel>
+
+          <Button Command="{Binding CmdUpdate}"
+                  Content="Update"/>
+
+          <ItemsControl ItemsSource="{Binding SearchResults}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding PackageId}"/>
+                  <TextBlock Text="{Binding Version}"/>
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+        </StackPanel>
+      </TabItem>
+
+      <TabItem Header="Push">
+
+        <StackPanel>
+
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding PackageId}"/>
-            <TextBlock Text="{Binding Version}"/>
-          </StackPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+            <TextBlock Text="{Binding SelectedFolder}"
+                       Classes="folder"/>
 
-    <TextBlock Foreground="Crimson"
-               Text="{Binding ErrorMessage}"/>
+            <Button Content="..."
+                    Command="{Binding CmdChooseFolder}"/>
+
+            <Button Content="Add"
+                    Command="{Binding CmdAddFolder}"/>
+          </StackPanel>
+
+          <ItemsControl ItemsSource="{Binding Folders}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding}"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+        </StackPanel>
+
+      </TabItem>
+
+    </TabControl>
+
+    <TextBlock Text="{Binding ErrorMessage}"
+               Classes="error"/>
 
   </StackPanel>
 </UserControl>

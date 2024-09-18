@@ -1,3 +1,4 @@
+using Andromeda.Tools.PublishPackages.Interactions;
 using Andromeda.Tools.PublishPackages.ViewModels;
 using Andromeda.Tools.PublishPackages.Views;
 using Avalonia;
@@ -21,6 +22,11 @@ namespace Andromeda.Tools.PublishPackages
                 {
                     DataContext = new MainViewModel(),
                 };
+
+                AppInteractions.StorageProvider
+                    .RegisterHandler(ctx => ctx.SetOutput(
+                        cdl.MainWindow.StorageProvider
+                    ));
             }
         }
     }
