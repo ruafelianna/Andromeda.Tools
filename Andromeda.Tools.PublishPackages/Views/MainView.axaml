@@ -3,6 +3,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Andromeda.Tools.PublishPackages.Views.MainView">
-  
+             x:Class="Andromeda.Tools.PublishPackages.Views.MainView"
+             xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             x:DataType="vm:MainViewModel">
+  <StackPanel>
+    <StackPanel Orientation="Horizontal">
+      <ComboBox SelectedItem="{Binding SelectedServer}"
+              ItemsSource="{Binding Servers}"/>
+
+      <Button Command="{Binding CmdUpdate}"
+              Content="Update"/>
+    </StackPanel>
+
+    <ItemsControl ItemsSource="{Binding SearchResults}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding PackageId}"/>
+            <TextBlock Text="{Binding Version}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <TextBlock Foreground="Crimson"
+               Text="{Binding ErrorMessage}"/>
+
+  </StackPanel>
 </UserControl>
