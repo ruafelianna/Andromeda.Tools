@@ -1,8 +1,9 @@
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Andromeda.Tools.PublishPackages.ViewModels
 {
-    internal class PackageItem
+    internal class PackageItem : ReactiveObject
     {
         public PackageItem(string name)
         {

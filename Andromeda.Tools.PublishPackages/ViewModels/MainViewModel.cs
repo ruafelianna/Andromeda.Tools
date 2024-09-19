@@ -1,5 +1,6 @@
 using Andromeda.Tools.PublishPackages.Interactions;
 using Andromeda.Tools.PublishPackages.Properties;
+using Andromeda.Tools.PublishPackages.Services;
 using BaGet.Protocol;
 using BaGet.Protocol.Models;
 using DynamicData;
@@ -14,15 +15,24 @@ using System.Reactive.Linq;
 
 namespace Andromeda.Tools.PublishPackages.ViewModels
 {
-    internal class MainViewModel : ViewModelBase
+    internal partial class MainViewModel : ViewModelBase
     {
         public MainViewModel()
         {
             var settings = Settings.Instance;
 
-            Servers = [
-                "https://localhost:7183/v3/index.json",
-            ];
+            // ----------------------------------------------
+
+            _serversCache = new(x => x);
+
+            _serversCache.AddOrUpdate(settings.Servers.Cast<string>());
+
+            _serversCache
+                .Connect()
+                .SortBy(x => x)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Bind(out _servers)
+                .Subscribe();
 
             // ----------------------------------------------
 
@@ -54,20 +64,42 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
             // ----------------------------------------------
 
-            var canMakeRequest = this
+            var isServerSelected = this
                 .WhenAnyValue(vm => vm.SelectedServer)
                 .Select(val => !string.IsNullOrEmpty(val));
 
-            var canAddFolder = this
+            var isFolderChosen = this
                 .WhenAnyValue(vm => vm.SelectedFolder)
                 .Select(val => !string.IsNullOrEmpty(val));
+
+            var isServerEntered = this
+                .WhenAnyValue(vm => vm.NewServer)
+                .Select(val => !string.IsNullOrEmpty(val));
+
+            var anyFoldersChosen = _foldersCache
+                .Connect()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .AutoRefresh(folder => folder.IsSelected)
+                .ToCollection()
+                .Select(list => list.Any(x => x.IsSelected));
+
+            var anyPackagesChosen = _foldersCache
+                .Connect()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .AutoRefresh(folder => folder.IsAnyPackageSelected)
+                .ToCollection()
+                .Select(list => list.Any(x => x.IsAnyPackageSelected));
+
+            var canPushPackages = Observable
+                .CombineLatest(isServerSelected, anyPackagesChosen)
+                .Select(list => list.All(x => x));
 
             // ----------------------------------------------
 
             CmdUpdate = ReactiveCommand
                 .CreateFromTask<Unit, IReadOnlyList<SearchResult>>(
                     async _ => await NewClient.SearchAsync(),
-                    canMakeRequest
+                    isServerSelected
                 );
 
             CmdUpdate
@@ -100,7 +132,7 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
                         if (folders.Any())
                         {
-                            return folders[0].Path.AbsolutePath;
+                            return folders[0].Path.LocalPath;
                         }
 
                         return null;
@@ -136,7 +168,7 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
                         SelectedFolder = null;
                     },
-                    canAddFolder
+                    isFolderChosen
                 );
 
             // ----------------------------------------------
@@ -161,7 +193,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
                     _foldersCache.RemoveKeys(selected);
 
                     return selected;
-                }
+                },
+                anyFoldersChosen
             );
 
             CmdRemoveFolders
@@ -175,9 +208,93 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
                     settings.Save();
                 });
+
+            // ----------------------------------------------
+
+            CmdPushPackages = ReactiveCommand.CreateFromTask(
+                async() => {
+                    var settings = Settings.Instance;
+
+                    var token = settings.ApiKey
+                        ?? await DotnetService.GetDevAPIKey()
+                        ?? throw new InvalidOperationException(
+                            "No NuGet API key provided"
+                        );
+
+                    var pkgs = Folders
+                        .SelectMany(
+                            Folder => Folder.Packages
+                                .Where(p => p.IsSelected)
+                                .Select(
+                                    File => (Folder, File)
+                                )
+                        );
+
+                    foreach (var (Folder, File) in pkgs)
+                    {
+                        var output = await DotnetService.PushPackage(
+                            token,
+                            SelectedServer!,
+                            Folder.Name,
+                            File.Name
+                        );
+                    }
+                },
+                canPushPackages
+            );
+
+            CmdPushPackages
+                .Subscribe(_ => ErrorMessage = null);
+
+            CmdPushPackages.ThrownExceptions
+                .Subscribe(ex => ErrorMessage = ex.Message);
+
+            // ----------------------------------------------
+
+            CmdAddServer = ReactiveCommand.Create(
+                () => {
+                    _serversCache.AddOrUpdate(NewServer!);
+
+                    var settings = Settings.Instance;
+
+                    if (!settings.Servers.Contains(NewServer))
+                    {
+                        settings.Servers.Add(NewServer);
+                    }
+
+                    settings.Save();
+
+                    NewServer = null;
+                },
+                isServerEntered
+            );
+
+            // ----------------------------------------------
+
+            CmdRemoveServer = ReactiveCommand.Create<Unit, string>(
+                _ => {
+                    var server = SelectedServer!;
+
+                    _serversCache.RemoveKey(server);
+
+                    var settings = Settings.Instance;
+
+                    if (settings.Servers.Contains(server))
+                    {
+                        settings.Servers.Remove(server);
+                    }
+
+                    settings.Save();
+
+                    return server;
+                },
+                isServerSelected
+            );
         }
 
-        public IEnumerable<string> Servers { get; }
+        private readonly SourceCache<string, string> _serversCache;
+        private readonly ReadOnlyObservableCollection<string> _servers;
+        public IEnumerable<string> Servers => _servers;
 
         private readonly SourceCache<SearchResult, string> _searchResultsCache;
         private readonly ReadOnlyObservableCollection<SearchResult> _searchResults;
@@ -196,6 +313,9 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         [Reactive]
         public string? ErrorMessage { get; set; }
 
+        [Reactive]
+        public string? NewServer { get; set; }
+
         public ReactiveCommand<Unit, IReadOnlyList<SearchResult>> CmdUpdate { get; }
 
         public ReactiveCommand<Unit, string?> CmdChooseFolder { get; }
@@ -205,6 +325,12 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         public ReactiveCommand<Unit, Unit> CmdListPackages { get; }
 
         public ReactiveCommand<Unit, IEnumerable<string>> CmdRemoveFolders { get; }
+
+        public ReactiveCommand<Unit, Unit> CmdPushPackages { get; }
+
+        public ReactiveCommand<Unit, Unit> CmdAddServer { get; }
+
+        public ReactiveCommand<Unit, string> CmdRemoveServer { get; }
 
         private NuGetClient NewClient => new(SelectedServer);
     }

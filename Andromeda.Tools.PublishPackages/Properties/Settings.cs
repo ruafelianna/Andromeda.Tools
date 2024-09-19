@@ -15,5 +15,20 @@ namespace Andromeda.Tools.PublishPackages.Properties
             get => (StringCollection)this[nameof(Folders)];
             set => this[nameof(Folders)] = value;
         }
+
+        [UserScopedSetting]
+        [DefaultSettingValue("")]
+        public StringCollection Servers
+        {
+            get => (StringCollection)this[nameof(Servers)];
+            set => this[nameof(Servers)] = value;
+        }
+
+        [UserScopedSetting]
+        public string? ApiKey
+        {
+            get => (string?)this[nameof(ApiKey)];
+            set => this[nameof(ApiKey)] = value;
+        }
     }
 }

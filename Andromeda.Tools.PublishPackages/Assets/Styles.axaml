@@ -7,11 +7,6 @@
     <Style Selector="^.error">
       <Setter Property="Foreground" Value="Crimson"/>
     </Style>
-
-    <Style Selector="^.folder">
-      <Setter Property="Width" Value="400"/>
-      <Setter Property="TextWrapping" Value="Wrap"/>
-    </Style>
   </Style>
 
   <Style Selector="Button">
@@ -30,6 +25,20 @@
 
   <Style Selector="TreeViewItem">
     <Setter Property="IsExpanded" Value="True"/>
+  </Style>
+
+  <Style Selector="TextBox">
+    <Setter Property="Margin" Value="10"/>
+    <Setter Property="Width" Value="300"/>
+
+    <Style Selector="^ TextBlock">
+      <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style Selector="^.folder">
+      <Setter Property="Width" Value="400"/>
+      <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
   </Style>
 
 </Styles>

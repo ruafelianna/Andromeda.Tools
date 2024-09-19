@@ -1,4 +1,5 @@
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -11,7 +12,7 @@ using System.Reactive.Linq;
 
 namespace Andromeda.Tools.PublishPackages.ViewModels
 {
-    internal class FolderItem
+    internal class FolderItem : ReactiveObject
     {
         public FolderItem(string name)
         {
@@ -25,6 +26,14 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _packages)
                 .Subscribe();
+
+            _packagesCache
+                .Connect()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .AutoRefresh(file => file.IsSelected)
+                .ToCollection()
+                .Select(list => list.Any(x => x.IsSelected))
+                .ToPropertyEx(this, vm => vm.IsAnyPackageSelected);
 
             CmdUpdate = ReactiveCommand
                 .Create<Unit, IEnumerable<PackageItem>>(
@@ -47,6 +56,9 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
         [Reactive]
         public bool IsSelected { get; set; }
+
+        [ObservableAsProperty]
+        public bool IsAnyPackageSelected { get; }
 
         private readonly SourceCache<PackageItem, string> _packagesCache;
         private readonly ReadOnlyObservableCollection<PackageItem> _packages;

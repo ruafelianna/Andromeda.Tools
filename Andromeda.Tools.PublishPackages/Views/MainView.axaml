@@ -7,8 +7,23 @@
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
              x:DataType="vm:MainViewModel">
   <StackPanel>
-    <ComboBox SelectedItem="{Binding SelectedServer}"
-              ItemsSource="{Binding Servers}"/>
+    <StackPanel Orientation="Horizontal">
+      <TextBox Text="{Binding NewServer}"
+               Watermark="Enter new server"/>
+
+      <Button Command="{Binding CmdAddServer}"
+              Content="Add"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <ComboBox SelectedItem="{Binding SelectedServer}"
+                ItemsSource="{Binding Servers}"
+                PlaceholderText="Choose server"
+                PlaceholderForeground="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
+
+      <Button Command="{Binding CmdRemoveServer}"
+              Content="Remove"/>
+    </StackPanel>
 
     <TabControl>
 
@@ -37,8 +52,9 @@
         <StackPanel>
 
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding SelectedFolder}"
-                       Classes="folder"/>
+            <TextBox Text="{Binding SelectedFolder}"
+                     Classes="folder"
+                     Watermark="Choose or enter a folder"/>
 
             <Button Content="..."
                     Command="{Binding CmdChooseFolder}"/>
@@ -51,8 +67,11 @@
             <Button Content="Refresh"
                   Command="{Binding CmdListPackages}"/>
 
-            <Button Content="Remove selected"
+            <Button Content="Remove selected folders"
                     Command="{Binding CmdRemoveFolders}"/>
+
+            <Button Content="Push selected packages"
+                    Command="{Binding CmdPushPackages}"/>
           </StackPanel>
 
           <TreeView ItemsSource="{Binding Folders}">
