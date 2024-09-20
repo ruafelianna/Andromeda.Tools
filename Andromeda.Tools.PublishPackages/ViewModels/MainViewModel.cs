@@ -230,14 +230,23 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
                                 )
                         );
 
+                    var ok = true;
+
                     foreach (var (Folder, File) in pkgs)
                     {
-                        var output = await DotnetService.PushPackage(
+                        var (result, stdout, stderr) = await DotnetService.PushPackage(
                             token,
                             SelectedServer!,
                             Folder.Name,
                             File.Name
                         );
+
+                        ok &= result;
+                    }
+
+                    if (!ok)
+                    {
+                        throw new Exception("Not all packages were pushed");
                     }
                 },
                 canPushPackages
@@ -290,6 +299,41 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
                 },
                 isServerSelected
             );
+
+            // ----------------------------------------------
+
+            CmdRemovePackage = ReactiveCommand.CreateFromTask<SearchResult, string>(
+                async sr => {
+                    var token = Settings.Instance.ApiKey
+                        ?? await DotnetService.GetDevAPIKey()
+                        ?? throw new InvalidOperationException(
+                            "No NuGet API key provided"
+                        );
+
+                    var (result, stdout, stderr) = await DotnetService.RemovePackage(
+                        token,
+                        SelectedServer!,
+                        sr.PackageId,
+                        sr.Version
+                    );
+
+                    if (!result)
+                    {
+                        throw new Exception("Couldn't remove the package");
+                    }
+
+                    await CmdUpdate.Execute();
+
+                    return $"{sr.PackageId}.{sr.Version}";
+                },
+                isServerSelected
+            );
+
+            CmdRemovePackage
+                .Subscribe(_ => ErrorMessage = null);
+
+            CmdRemovePackage.ThrownExceptions
+                .Subscribe(ex => ErrorMessage = ex.Message);
         }
 
         private readonly SourceCache<string, string> _serversCache;
@@ -331,6 +375,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         public ReactiveCommand<Unit, Unit> CmdAddServer { get; }
 
         public ReactiveCommand<Unit, string> CmdRemoveServer { get; }
+
+        public ReactiveCommand<SearchResult, string> CmdRemovePackage { get; }
 
         private NuGetClient NewClient => new(SelectedServer);
     }

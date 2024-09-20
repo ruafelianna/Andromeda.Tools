@@ -39,6 +39,9 @@
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Text="{Binding PackageId}"/>
                   <TextBlock Text="{Binding Version}"/>
+                  <Button Content="Remove"
+                          Command="{Binding $parent[UserControl].((vm:MainViewModel)DataContext).CmdRemovePackage}"
+                          CommandParameter="{Binding}"/>
                 </StackPanel>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
