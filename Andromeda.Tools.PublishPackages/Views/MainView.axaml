@@ -7,103 +7,19 @@
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
              x:DataType="vm:MainViewModel">
   <StackPanel>
-    <StackPanel Orientation="Horizontal">
-      <TextBox Text="{Binding NewServer}"
-               Watermark="Enter new server"/>
-
-      <Button Command="{Binding CmdAddServer}"
-              Content="Add"/>
-    </StackPanel>
-
-    <StackPanel Orientation="Horizontal">
-      <ComboBox SelectedItem="{Binding SelectedServer}"
-                ItemsSource="{Binding Servers}"
-                PlaceholderText="Choose server"
-                PlaceholderForeground="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
-
-      <Button Command="{Binding CmdRemoveServer}"
-              Content="Remove"/>
-    </StackPanel>
+    <ContentControl Content="{Binding ServersViewModel}"/>
 
     <TabControl>
 
       <TabItem Header="Search">
-        <StackPanel>
-
-          <Button Command="{Binding CmdUpdate}"
-                  Content="Update"/>
-
-          <ItemsControl ItemsSource="{Binding SearchResults}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock Text="{Binding PackageId}"/>
-                  <TextBlock Text="{Binding Version}"/>
-                  <Button Content="Remove"
-                          Command="{Binding $parent[UserControl].((vm:MainViewModel)DataContext).CmdRemovePackage}"
-                          CommandParameter="{Binding}"/>
-                </StackPanel>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-
-        </StackPanel>
+        <ContentControl Content="{Binding NuGetViewModel}"/>
       </TabItem>
 
       <TabItem Header="Push">
-
-        <StackPanel>
-
-          <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding SelectedFolder}"
-                     Classes="folder"
-                     Watermark="Choose or enter a folder"/>
-
-            <Button Content="..."
-                    Command="{Binding CmdChooseFolder}"/>
-
-            <Button Content="Add"
-                    Command="{Binding CmdAddFolder}"/>
-          </StackPanel>
-
-          <StackPanel Orientation="Horizontal">
-            <Button Content="Refresh"
-                  Command="{Binding CmdListPackages}"/>
-
-            <Button Content="Remove selected folders"
-                    Command="{Binding CmdRemoveFolders}"/>
-
-            <Button Content="Push selected packages"
-                    Command="{Binding CmdPushPackages}"/>
-          </StackPanel>
-
-          <TreeView ItemsSource="{Binding Folders}">
-            <ItemsControl.DataTemplates>
-              <TreeDataTemplate DataType="vm:FolderItem"
-                                ItemsSource="{Binding Packages}">
-                <StackPanel Orientation="Horizontal">
-                  <CheckBox IsChecked="{Binding IsSelected}"/>
-                  <TextBlock Text="{Binding Name}"/>
-                </StackPanel>
-              </TreeDataTemplate>
-
-              <TreeDataTemplate DataType="vm:PackageItem">
-                <StackPanel Orientation="Horizontal">
-                  <CheckBox IsChecked="{Binding IsSelected}"/>
-                  <TextBlock Text="{Binding Name}"/>
-                </StackPanel>
-              </TreeDataTemplate>
-            </ItemsControl.DataTemplates>
-          </TreeView>
-
-        </StackPanel>
-
+        <ContentControl Content="{Binding FoldersViewModel}"/>
       </TabItem>
 
     </TabControl>
-
-    <TextBlock Text="{Binding ErrorMessage}"
-               Classes="error"/>
 
   </StackPanel>
 </UserControl>

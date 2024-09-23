@@ -1,5 +1,4 @@
 using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -18,39 +17,16 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         {
             Name = name;
 
-            _packagesCache = new(x => x.Name);
+            InitPackages(out _packagesCache, out _packages);
 
-            _packagesCache
-                .Connect()
-                .SortBy(x => x.Name)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Bind(out _packages)
-                .Subscribe();
-
-            _packagesCache
-                .Connect()
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .AutoRefresh(file => file.IsSelected)
-                .ToCollection()
-                .Select(list => list.Any(x => x.IsSelected))
-                .ToPropertyEx(this, vm => vm.IsAnyPackageSelected);
-
-            CmdUpdate = ReactiveCommand
-                .Create<Unit, IEnumerable<PackageItem>>(
-                    _ => Directory
-                        .GetFiles(Name, "*.nupkg")
-                        .Select(x => new PackageItem(
-                            Path.GetFileName(x))
-                        )
-                );
-
-            CmdUpdate
-                .Subscribe(list =>
-                {
-                    _packagesCache.Clear();
-                    _packagesCache.AddOrUpdate(list);
-                });
+            InitCmdUpdate(out _cmdUpdate);
         }
+
+        #region Data
+
+        private readonly SourceCache<PackageItem, string> _packagesCache;
+        private readonly ReadOnlyObservableCollection<PackageItem> _packages;
+        public IEnumerable<PackageItem> Packages => _packages;
 
         public string Name { get; }
 
@@ -60,10 +36,58 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         [ObservableAsProperty]
         public bool IsAnyPackageSelected { get; }
 
-        private readonly SourceCache<PackageItem, string> _packagesCache;
-        private readonly ReadOnlyObservableCollection<PackageItem> _packages;
-        public IEnumerable<PackageItem> Packages => _packages;
+        #endregion
 
-        public ReactiveCommand<Unit, IEnumerable<PackageItem>> CmdUpdate { get; }
+        #region Commands
+
+        private readonly ReactiveCommand<Unit, IEnumerable<PackageItem>> _cmdUpdate;
+        public ReactiveCommand<Unit, IEnumerable<PackageItem>> CmdUpdate => _cmdUpdate;
+
+        #endregion
+
+        #region Init
+
+        private void InitPackages(
+            out SourceCache<PackageItem, string> cache,
+            out ReadOnlyObservableCollection<PackageItem> data
+        )
+        {
+            cache = new(x => x.Name);
+
+            cache
+                .Connect()
+                .SortBy(x => x.Name)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Bind(out data)
+                .Subscribe();
+
+            cache
+                .Connect()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .AutoRefresh(file => file.IsSelected)
+                .ToCollection()
+                .Select(list => list.Any(x => x.IsSelected))
+                .ToPropertyEx(this, vm => vm.IsAnyPackageSelected);
+        }
+
+        private void InitCmdUpdate(
+            out ReactiveCommand<Unit, IEnumerable<PackageItem>> cmd
+        )
+        {
+            cmd = ReactiveCommand.Create<Unit, IEnumerable<PackageItem>>(
+                _ => Directory
+                    .GetFiles(Name, "*.nupkg")
+                    .Select(x => new PackageItem(
+                        Path.GetFileName(x))
+                    )
+            );
+
+            cmd.Subscribe(list => {
+                _packagesCache.Clear();
+                _packagesCache.AddOrUpdate(list);
+            });
+        }
+
+        #endregion
     }
 }

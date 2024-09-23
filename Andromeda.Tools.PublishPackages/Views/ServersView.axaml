@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Andromeda.Tools.PublishPackages.Views.ServersView"
+             xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             x:DataType="vm:ServersViewModel">
+  <StackPanel>
+    <StackPanel Orientation="Horizontal">
+      <TextBox Text="{Binding NewServer}"
+               Watermark="Enter new server"/>
+
+      <Button Command="{Binding CmdAddServer}"
+              Content="Add"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <ComboBox SelectedItem="{Binding SelectedServer}"
+                ItemsSource="{Binding Servers}"
+                PlaceholderText="Choose server"
+                PlaceholderForeground="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
+
+      <Button Command="{Binding CmdRemoveServer}"
+              Content="Remove"/>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

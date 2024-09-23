@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             x:Class="Andromeda.Tools.PublishPackages.Views.FoldersView"
+             x:DataType="vm:FoldersViewModel">
+  <StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <TextBox Text="{Binding SelectedFolder}"
+               Classes="folder"
+               Watermark="Choose or enter a folder"/>
+
+      <Button Content="..."
+              Command="{Binding CmdChooseFolder}"/>
+
+      <Button Content="Add"
+              Command="{Binding CmdAddFolder}"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal">
+      <Button Content="Refresh"
+            Command="{Binding CmdListPackages}"/>
+
+      <Button Content="Remove selected folders"
+              Command="{Binding CmdRemoveFolders}"/>
+
+      <!--<Button Content="Push selected packages"
+              Command="{Binding CmdPushPackages}"/>-->
+    </StackPanel>
+
+    <TreeView ItemsSource="{Binding Folders}">
+      <ItemsControl.DataTemplates>
+        <TreeDataTemplate DataType="vm:FolderItem"
+                          ItemsSource="{Binding Packages}">
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding IsSelected}"/>
+            <TextBlock Text="{Binding Name}"/>
+          </StackPanel>
+        </TreeDataTemplate>
+
+        <TreeDataTemplate DataType="vm:PackageItem">
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding IsSelected}"/>
+            <TextBlock Text="{Binding Name}"/>
+          </StackPanel>
+        </TreeDataTemplate>
+      </ItemsControl.DataTemplates>
+    </TreeView>
+
+  </StackPanel>
+</UserControl>

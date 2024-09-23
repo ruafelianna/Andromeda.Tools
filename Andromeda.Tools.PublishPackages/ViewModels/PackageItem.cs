@@ -10,9 +10,13 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
             Name = name;
         }
 
+        #region Data
+
         public string Name { get; }
 
         [Reactive]
         public bool IsSelected { get; set; }
+
+        #endregion
     }
 }
