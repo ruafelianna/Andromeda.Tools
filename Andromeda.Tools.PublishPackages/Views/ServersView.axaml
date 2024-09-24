@@ -19,8 +19,7 @@
     <StackPanel Orientation="Horizontal">
       <ComboBox SelectedItem="{Binding SelectedServer}"
                 ItemsSource="{Binding Servers}"
-                PlaceholderText="{x:Static ast:Strings.View_ChooseServer}"
-                PlaceholderForeground="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
+                PlaceholderText="{x:Static ast:Strings.View_ChooseServer}"/>
 
       <Button Command="{Binding CmdRemoveServer}"
               Content="{x:Static ast:Strings.View_Btn_Remove}"/>

@@ -4,8 +4,8 @@
   <Style Selector="TextBlock">
     <Setter Property="Padding" Value="10"/>
 
-    <Style Selector="^.error">
-      <Setter Property="Foreground" Value="Crimson"/>
+    <Style Selector="^.package">
+      <Setter Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
     </Style>
   </Style>
 
@@ -17,6 +17,7 @@
   <Style Selector="ComboBox">
     <Setter Property="Margin" Value="10"/>
     <Setter Property="Width" Value="300"/>
+    <Setter Property="PlaceholderForeground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
 
     <Style Selector="^ TextBlock">
       <Setter Property="Padding" Value="0"/>

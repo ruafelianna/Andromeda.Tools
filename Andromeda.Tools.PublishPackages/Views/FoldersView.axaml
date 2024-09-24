@@ -45,7 +45,8 @@
         <TreeDataTemplate DataType="vm:PackageItem">
           <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding IsSelected}"/>
-            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text="{Binding Name}"
+                       Classes="package"/>
           </StackPanel>
         </TreeDataTemplate>
       </ItemsControl.DataTemplates>
