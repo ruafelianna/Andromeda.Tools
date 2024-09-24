@@ -219,7 +219,7 @@ namespace Andromeda.Tools.PublishPackages.Services
             var stderr = await proc.StandardError.ReadToEndAsync();
             stderr = stderr.TrimEnd();
 
-            using (var _ = logger.BeginScope(name))
+            using (var _ = logger.BeginScope(name!))
             {
                 if (string.IsNullOrWhiteSpace(stdout))
                 {
