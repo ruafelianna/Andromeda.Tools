@@ -1,3 +1,4 @@
+using Andromeda.Tools.PublishPackages.Abstractions;
 using Andromeda.Tools.PublishPackages.Assets;
 using Andromeda.Tools.PublishPackages.Helpers;
 using Andromeda.Tools.PublishPackages.Interactions;
@@ -44,6 +45,9 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
         [Reactive]
         public string? SelectedFolder { get; private set; }
+
+        [Reactive]
+        public ICanPushPackages? PackagesPusher { get; set; }
 
         #endregion
 

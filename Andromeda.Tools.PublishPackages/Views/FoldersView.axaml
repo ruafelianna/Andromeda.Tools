@@ -28,8 +28,8 @@
       <Button Content="{x:Static ast:Strings.View_Btn_RemoveSelectedFolders}"
               Command="{Binding CmdRemoveFolders}"/>
 
-      <!--<Button Content="{x:Static ast:View_Btn_PushSelectedPackages}"
-              Command="{Binding CmdPushPackages}"/>-->
+      <Button Content="{x:Static ast:Strings.View_Btn_PushSelectedPackages}"
+              Command="{Binding PackagesPusher.CmdPushPackages}"/>
     </StackPanel>
 
     <TreeView ItemsSource="{Binding Folders}">

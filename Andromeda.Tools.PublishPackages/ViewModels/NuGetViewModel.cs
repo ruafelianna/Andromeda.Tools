@@ -14,7 +14,7 @@ using System.Reactive.Linq;
 
 namespace Andromeda.Tools.PublishPackages.ViewModels
 {
-    internal class NuGetViewModel : ViewModelBase
+    internal class NuGetViewModel : ViewModelBase, ICanPushPackages
     {
         public NuGetViewModel(
             ILogger logger,

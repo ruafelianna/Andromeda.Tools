@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -100,6 +101,10 @@ namespace Andromeda.Tools.PublishPackages.Services
 
         private const string _stop = "_STOP";
 
+        private const string _noStdOut = $"{_delimiter} NO {_stdoutBig}";
+
+        private const string _noStdErr = $"{_delimiter} NO {_stderrBig}";
+
         private const string _stdout = $"{_delimiter} {_stdoutBig}{_start}:\n{{stdout}}\n{_delimiter} {_stdoutBig}{_stop}";
 
         private const string _stderr = $"{_delimiter} {_stderrBig}{_start}:\n{{stderr}}\n{_delimiter} {_stderrBig}{_stop}";
@@ -125,7 +130,7 @@ namespace Andromeda.Tools.PublishPackages.Services
             "nuget",
             "push",
             "-t",
-            $"{Math.Ceiling(timeout.TotalSeconds)}:f0",
+            $"{Math.Ceiling(timeout.TotalSeconds):f0}",
             "-s",
             server,
             "-k",
@@ -199,7 +204,8 @@ namespace Andromeda.Tools.PublishPackages.Services
 
         private static async Task<(string? StdOut, string? StdErr)> RunProcess(
             ILogger logger,
-            ProcessStartInfo info
+            ProcessStartInfo info,
+            [CallerMemberName] string? name = default
         )
         {
             var proc = Process.Start(info)
@@ -208,12 +214,31 @@ namespace Andromeda.Tools.PublishPackages.Services
             await proc.WaitForExitAsync();
 
             var stdout = await proc.StandardOutput.ReadToEndAsync();
+            stdout = stdout.TrimEnd();
 
             var stderr = await proc.StandardError.ReadToEndAsync();
+            stderr = stderr.TrimEnd();
 
-            logger.LogTrace(_stdout, stdout);
+            using (var _ = logger.BeginScope(name))
+            {
+                if (string.IsNullOrWhiteSpace(stdout))
+                {
+                    logger.LogTrace(_noStdOut);
+                }
+                else
+                {
+                    logger.LogTrace(_stdout, stdout);
+                }
 
-            logger.LogDebug(_stderr, stderr);
+                if (string.IsNullOrWhiteSpace(stderr))
+                {
+                    logger.LogDebug(_noStdErr);
+                }
+                else
+                {
+                    logger.LogDebug(_stderr, stderr);
+                }
+            }
 
             if (proc.ExitCode != 0)
             {

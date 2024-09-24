@@ -44,6 +44,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
                 .RegisterHandler(ctx => ctx.SetOutput(
                     FoldersViewModel.Folders
                 ));
+
+            FoldersViewModel.PackagesPusher = NuGetViewModel;
         }
 
         public ServersViewModel ServersViewModel { get; }
