@@ -28,6 +28,15 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
             InitServers(out _serversCache, out _servers, settings);
 
+            this
+                .WhenAnyValue(vm => vm.SelectedServer)
+                .Subscribe(x => {
+                    if (x is null && _servers.Count == 1)
+                    {
+                        SelectedServer = _servers[0];
+                    }
+                });
+
             InitCmdAddServer(out _cmdAddServer, logger);
 
             InitCmdRemoveServer(out _cmdRemoveServer, logger);
@@ -102,6 +111,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
             );
 
             cmd.Subscribe(_ => NewServer = null);
+
+            cmd.Subscribe(newServer => SelectedServer = newServer);
 
             cmd
                 .SelectMany(async newServer => {
