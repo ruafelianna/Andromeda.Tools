@@ -207,6 +207,9 @@
   <data name="View_ChooseServer" xml:space="preserve">
     <value>Choose server</value>
   </data>
+  <data name="View_Count" xml:space="preserve">
+    <value>Count: {0}</value>
+  </data>
   <data name="View_EnterNewServer" xml:space="preserve">
     <value>Enter new server</value>
   </data>

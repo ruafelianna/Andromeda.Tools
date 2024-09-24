@@ -27,6 +27,9 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
 
             InitSearchResults(out _searchResultsCache, out _searchResults);
 
+            CountObservable = _searchResults
+                .WhenAnyValue(r => r.Count);
+
             InitCmdUpdate(
                 out _cmdUpdate,
                 logger,
@@ -54,6 +57,8 @@ namespace Andromeda.Tools.PublishPackages.ViewModels
         private readonly SourceCache<INuGetSearchResult, string> _searchResultsCache;
         private readonly ReadOnlyObservableCollection<INuGetSearchResult> _searchResults;
         public IEnumerable<INuGetSearchResult> SearchResults => _searchResults;
+
+        public IObservable<int> CountObservable { get; }
 
         #endregion
 

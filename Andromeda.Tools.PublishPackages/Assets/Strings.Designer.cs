@@ -331,6 +331,15 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count: {0}.
+        /// </summary>
+        public static string View_Count {
+            get {
+                return ResourceManager.GetString("View_Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter new server.
         /// </summary>
         public static string View_EnterNewServer {

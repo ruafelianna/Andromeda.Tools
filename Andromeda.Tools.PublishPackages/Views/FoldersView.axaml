@@ -7,9 +7,10 @@
              xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:Class="Andromeda.Tools.PublishPackages.Views.FoldersView"
              x:DataType="vm:FoldersViewModel">
-  <StackPanel>
+  <Grid RowDefinitions="Auto,Auto,*">
 
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
       <TextBox Text="{Binding SelectedFolder}"
                Classes="folder"
                Watermark="{x:Static ast:Strings.View_ChooseOrEnterFolder}"/>
@@ -21,7 +22,8 @@
               Command="{Binding CmdAddFolder}"/>
     </StackPanel>
 
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="1">
       <Button Content="{x:Static ast:Strings.View_Btn_Refresh}"
             Command="{Binding CmdListPackages}"/>
 
@@ -32,25 +34,28 @@
               Command="{Binding PackagesPusher.CmdPushPackages}"/>
     </StackPanel>
 
-    <TreeView ItemsSource="{Binding Folders}">
-      <ItemsControl.DataTemplates>
-        <TreeDataTemplate DataType="vm:FolderItem"
-                          ItemsSource="{Binding Packages}">
-          <StackPanel Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding IsSelected}"/>
-            <TextBlock Text="{Binding Name}"/>
-          </StackPanel>
-        </TreeDataTemplate>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Grid.Row="2">
+      <TreeView ItemsSource="{Binding Folders}">
+        <TreeView.DataTemplates>
+          <TreeDataTemplate DataType="vm:FolderItem"
+                            ItemsSource="{Binding Packages}">
+            <StackPanel Orientation="Horizontal">
+              <CheckBox IsChecked="{Binding IsSelected}"/>
+              <TextBlock Text="{Binding Name}"/>
+            </StackPanel>
+          </TreeDataTemplate>
 
-        <TreeDataTemplate DataType="vm:PackageItem">
-          <StackPanel Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding IsSelected}"/>
-            <TextBlock Text="{Binding Name}"
-                       Classes="package"/>
-          </StackPanel>
-        </TreeDataTemplate>
-      </ItemsControl.DataTemplates>
-    </TreeView>
+          <TreeDataTemplate DataType="vm:PackageItem">
+            <StackPanel Orientation="Horizontal">
+              <CheckBox IsChecked="{Binding IsSelected}"/>
+              <TextBlock Text="{Binding Name}"
+                         Classes="package"/>
+            </StackPanel>
+          </TreeDataTemplate>
+        </TreeView.DataTemplates>
+      </TreeView>
+    </ScrollViewer>
 
-  </StackPanel>
+  </Grid>
 </UserControl>

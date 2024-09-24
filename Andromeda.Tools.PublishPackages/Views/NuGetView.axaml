@@ -7,26 +7,35 @@
              xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:Class="Andromeda.Tools.PublishPackages.Views.NuGetView"
              x:DataType="vm:NuGetViewModel">
-  <StackPanel>
+  <Grid RowDefinitions="Auto,Auto,*">
 
     <Button Command="{Binding CmdUpdate}"
-            Content="{x:Static ast:Strings.View_Btn_Update}"/>
+            Content="{x:Static ast:Strings.View_Btn_Update}"
+            Grid.Row="0"/>
 
-    <ItemsControl ItemsSource="{Binding SearchResults}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding PackageId}"/>
+    <TextBlock Text="{Binding CountObservable^,
+                      StringFormat='{x:Static ast:Strings.View_Count}'}"
+               Classes="count"
+               Grid.Row="1"/>
 
-            <TextBlock Text="{Binding Version}"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Grid.Row="2">
+      <ItemsControl ItemsSource="{Binding SearchResults}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding PackageId}"/>
 
-            <Button Content="{x:Static ast:Strings.View_Btn_Remove}"
-                    Command="{Binding $parent[UserControl].((vm:NuGetViewModel)DataContext).CmdRemovePackage}"
-                    CommandParameter="{Binding}"/>
-          </StackPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+              <TextBlock Text="{Binding Version}"/>
 
-  </StackPanel>
+              <Button Content="{x:Static ast:Strings.View_Btn_Remove}"
+                      Command="{Binding $parent[UserControl].((vm:NuGetViewModel)DataContext).CmdRemovePackage}"
+                      CommandParameter="{Binding}"/>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+  </Grid>
 </UserControl>
