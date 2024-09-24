@@ -180,4 +180,43 @@
   <data name="Info_ServerRemoved" xml:space="preserve">
     <value>Server is removed: {0}</value>
   </data>
+  <data name="View_Btn_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="View_Btn_ChooseFolder" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="View_Btn_PushSelectedPackages" xml:space="preserve">
+    <value>Push selected packages</value>
+  </data>
+  <data name="View_Btn_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="View_Btn_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="View_Btn_RemoveSelectedFolders" xml:space="preserve">
+    <value>Remove selected folders</value>
+  </data>
+  <data name="View_Btn_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="View_ChooseOrEnterFolder" xml:space="preserve">
+    <value>Choose or enter a folder</value>
+  </data>
+  <data name="View_ChooseServer" xml:space="preserve">
+    <value>Choose server</value>
+  </data>
+  <data name="View_EnterNewServer" xml:space="preserve">
+    <value>Enter new server</value>
+  </data>
+  <data name="View_Tab_Push" xml:space="preserve">
+    <value>Push</value>
+  </data>
+  <data name="View_Tab_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="View_Title" xml:space="preserve">
+    <value>Packages Helper</value>
+  </data>
 </root>

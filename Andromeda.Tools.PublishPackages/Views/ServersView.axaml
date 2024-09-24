@@ -5,24 +5,25 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Andromeda.Tools.PublishPackages.Views.ServersView"
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:DataType="vm:ServersViewModel">
   <StackPanel>
     <StackPanel Orientation="Horizontal">
       <TextBox Text="{Binding NewServer}"
-               Watermark="Enter new server"/>
+               Watermark="{x:Static ast:Strings.View_EnterNewServer}"/>
 
       <Button Command="{Binding CmdAddServer}"
-              Content="Add"/>
+              Content="{x:Static ast:Strings.View_Btn_Add}"/>
     </StackPanel>
 
     <StackPanel Orientation="Horizontal">
       <ComboBox SelectedItem="{Binding SelectedServer}"
                 ItemsSource="{Binding Servers}"
-                PlaceholderText="Choose server"
+                PlaceholderText="{x:Static ast:Strings.View_ChooseServer}"
                 PlaceholderForeground="{DynamicResource TextControlPlaceholderForegroundDisabled}"/>
 
       <Button Command="{Binding CmdRemoveServer}"
-              Content="Remove"/>
+              Content="{x:Static ast:Strings.View_Btn_Remove}"/>
     </StackPanel>
   </StackPanel>
 </UserControl>

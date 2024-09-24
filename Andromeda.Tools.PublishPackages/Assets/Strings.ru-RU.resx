@@ -180,4 +180,43 @@
   <data name="Info_ServerRemoved" xml:space="preserve">
     <value>Сервер удалён: {0}</value>
   </data>
+  <data name="View_Btn_Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="View_Btn_ChooseFolder" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="View_Btn_PushSelectedPackages" xml:space="preserve">
+    <value>Отправить выбранные пакеты</value>
+  </data>
+  <data name="View_Btn_Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="View_Btn_Remove" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="View_Btn_RemoveSelectedFolders" xml:space="preserve">
+    <value>Удалить выбранные директории</value>
+  </data>
+  <data name="View_Btn_Update" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="View_ChooseOrEnterFolder" xml:space="preserve">
+    <value>Выберите или введите директорию</value>
+  </data>
+  <data name="View_ChooseServer" xml:space="preserve">
+    <value>Выберите сервер</value>
+  </data>
+  <data name="View_EnterNewServer" xml:space="preserve">
+    <value>Введите новый сервер</value>
+  </data>
+  <data name="View_Tab_Push" xml:space="preserve">
+    <value>Отправка</value>
+  </data>
+  <data name="View_Tab_Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="View_Title" xml:space="preserve">
+    <value>Помощник пакетов</value>
+  </data>
 </root>

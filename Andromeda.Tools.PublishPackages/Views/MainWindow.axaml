@@ -5,6 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Andromeda.Tools.PublishPackages.Views.MainWindow"
         xmlns:views="using:Andromeda.Tools.PublishPackages.Views"
-        Title="Publish packages">
+        xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
+        Title="{x:Static ast:Strings.View_Title}">
   <views:MainView/>
 </Window>

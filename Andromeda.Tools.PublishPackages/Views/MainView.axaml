@@ -5,17 +5,18 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Andromeda.Tools.PublishPackages.Views.MainView"
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:DataType="vm:MainViewModel">
   <StackPanel>
     <ContentControl Content="{Binding ServersViewModel}"/>
 
     <TabControl>
 
-      <TabItem Header="Search">
+      <TabItem Header="{x:Static ast:Strings.View_Tab_Search}">
         <ContentControl Content="{Binding NuGetViewModel}"/>
       </TabItem>
 
-      <TabItem Header="Push">
+      <TabItem Header="{x:Static ast:Strings.View_Tab_Push}">
         <ContentControl Content="{Binding FoldersViewModel}"/>
       </TabItem>
 

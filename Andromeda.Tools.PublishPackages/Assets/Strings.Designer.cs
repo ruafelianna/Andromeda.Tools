@@ -22,7 +22,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Andromeda.Tools.PublishPackages.Assets.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Select containing NuGet package folder.
         /// </summary>
-        internal static string Dialog_SelectPackageFolder {
+        public static string Dialog_SelectPackageFolder {
             get {
                 return ResourceManager.GetString("Dialog_SelectPackageFolder", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Cannot create NuGet client: {0}.
         /// </summary>
-        internal static string Error_CannotCreateNuGetClient {
+        public static string Error_CannotCreateNuGetClient {
             get {
                 return ResourceManager.GetString("Error_CannotCreateNuGetClient", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Cannot create a new process.
         /// </summary>
-        internal static string Error_CannotCreateProcess {
+        public static string Error_CannotCreateProcess {
             get {
                 return ResourceManager.GetString("Error_CannotCreateProcess", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Cannot push packages.
         /// </summary>
-        internal static string Error_CannotPushPackages {
+        public static string Error_CannotPushPackages {
             get {
                 return ResourceManager.GetString("Error_CannotPushPackages", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Error while choosing folder.
         /// </summary>
-        internal static string Error_ChooseFolder {
+        public static string Error_ChooseFolder {
             get {
                 return ResourceManager.GetString("Error_ChooseFolder", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to No NuGet API key provided.
         /// </summary>
-        internal static string Error_NoNuGetAPIKey {
+        public static string Error_NoNuGetAPIKey {
             get {
                 return ResourceManager.GetString("Error_NoNuGetAPIKey", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Process returned exit code = {0}.
         /// </summary>
-        internal static string Error_ProcessReturnedCode {
+        public static string Error_ProcessReturnedCode {
             get {
                 return ResourceManager.GetString("Error_ProcessReturnedCode", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Cannot remove package: {0}.
         /// </summary>
-        internal static string Error_RemovePackage {
+        public static string Error_RemovePackage {
             get {
                 return ResourceManager.GetString("Error_RemovePackage", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Server name is null.
         /// </summary>
-        internal static string Error_ServerNameIsNull {
+        public static string Error_ServerNameIsNull {
             get {
                 return ResourceManager.GetString("Error_ServerNameIsNull", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to No answer.
         /// </summary>
-        internal static string Error_TimeoutException {
+        public static string Error_TimeoutException {
             get {
                 return ResourceManager.GetString("Error_TimeoutException", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Cannot update packages list.
         /// </summary>
-        internal static string Error_UpdatePackagesList {
+        public static string Error_UpdatePackagesList {
             get {
                 return ResourceManager.GetString("Error_UpdatePackagesList", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Directory is chosen: {0}.
         /// </summary>
-        internal static string Info_DirectoryChosen {
+        public static string Info_DirectoryChosen {
             get {
                 return ResourceManager.GetString("Info_DirectoryChosen", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Folder is added: {0}.
         /// </summary>
-        internal static string Info_FolderAdded {
+        public static string Info_FolderAdded {
             get {
                 return ResourceManager.GetString("Info_FolderAdded", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Directory already exists: {0}.
         /// </summary>
-        internal static string Info_FolderExists {
+        public static string Info_FolderExists {
             get {
                 return ResourceManager.GetString("Info_FolderExists", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Folders are removed: {0}.
         /// </summary>
-        internal static string Info_FoldersRemoved {
+        public static string Info_FoldersRemoved {
             get {
                 return ResourceManager.GetString("Info_FoldersRemoved", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to NuGet package files were listed for {0} folders.
         /// </summary>
-        internal static string Info_PackageFilesListed {
+        public static string Info_PackageFilesListed {
             get {
                 return ResourceManager.GetString("Info_PackageFilesListed", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Package is removed: {0}.
         /// </summary>
-        internal static string Info_PackageRemoved {
+        public static string Info_PackageRemoved {
             get {
                 return ResourceManager.GetString("Info_PackageRemoved", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Packages list is updated, count = {0}.
         /// </summary>
-        internal static string Info_PackagesListUpdated {
+        public static string Info_PackagesListUpdated {
             get {
                 return ResourceManager.GetString("Info_PackagesListUpdated", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Packages pushed: {0}.
         /// </summary>
-        internal static string Info_PackagesPushed {
+        public static string Info_PackagesPushed {
             get {
                 return ResourceManager.GetString("Info_PackagesPushed", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Server is added: {0}.
         /// </summary>
-        internal static string Info_ServerAdded {
+        public static string Info_ServerAdded {
             get {
                 return ResourceManager.GetString("Info_ServerAdded", resourceCulture);
             }
@@ -243,9 +243,126 @@ namespace Andromeda.Tools.PublishPackages.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Server is removed: {0}.
         /// </summary>
-        internal static string Info_ServerRemoved {
+        public static string Info_ServerRemoved {
             get {
                 return ResourceManager.GetString("Info_ServerRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string View_Btn_Add {
+            get {
+                return ResourceManager.GetString("View_Btn_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ....
+        /// </summary>
+        public static string View_Btn_ChooseFolder {
+            get {
+                return ResourceManager.GetString("View_Btn_ChooseFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push selected packages.
+        /// </summary>
+        public static string View_Btn_PushSelectedPackages {
+            get {
+                return ResourceManager.GetString("View_Btn_PushSelectedPackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string View_Btn_Refresh {
+            get {
+                return ResourceManager.GetString("View_Btn_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string View_Btn_Remove {
+            get {
+                return ResourceManager.GetString("View_Btn_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove selected folders.
+        /// </summary>
+        public static string View_Btn_RemoveSelectedFolders {
+            get {
+                return ResourceManager.GetString("View_Btn_RemoveSelectedFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string View_Btn_Update {
+            get {
+                return ResourceManager.GetString("View_Btn_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose or enter a folder.
+        /// </summary>
+        public static string View_ChooseOrEnterFolder {
+            get {
+                return ResourceManager.GetString("View_ChooseOrEnterFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose server.
+        /// </summary>
+        public static string View_ChooseServer {
+            get {
+                return ResourceManager.GetString("View_ChooseServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter new server.
+        /// </summary>
+        public static string View_EnterNewServer {
+            get {
+                return ResourceManager.GetString("View_EnterNewServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push.
+        /// </summary>
+        public static string View_Tab_Push {
+            get {
+                return ResourceManager.GetString("View_Tab_Push", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string View_Tab_Search {
+            get {
+                return ResourceManager.GetString("View_Tab_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages Helper.
+        /// </summary>
+        public static string View_Title {
+            get {
+                return ResourceManager.GetString("View_Title", resourceCulture);
             }
         }
     }

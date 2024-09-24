@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:Class="Andromeda.Tools.PublishPackages.Views.NuGetView"
              x:DataType="vm:NuGetViewModel">
   <StackPanel>
 
     <Button Command="{Binding CmdUpdate}"
-            Content="Update"/>
+            Content="{x:Static ast:Strings.View_Btn_Update}"/>
 
     <ItemsControl ItemsSource="{Binding SearchResults}">
       <ItemsControl.ItemTemplate>
@@ -19,7 +20,7 @@
 
             <TextBlock Text="{Binding Version}"/>
 
-            <Button Content="Remove"
+            <Button Content="{x:Static ast:Strings.View_Btn_Remove}"
                     Command="{Binding $parent[UserControl].((vm:NuGetViewModel)DataContext).CmdRemovePackage}"
                     CommandParameter="{Binding}"/>
           </StackPanel>

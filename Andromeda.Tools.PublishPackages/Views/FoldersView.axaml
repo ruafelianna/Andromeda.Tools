@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:Andromeda.Tools.PublishPackages.ViewModels"
+             xmlns:ast="using:Andromeda.Tools.PublishPackages.Assets"
              x:Class="Andromeda.Tools.PublishPackages.Views.FoldersView"
              x:DataType="vm:FoldersViewModel">
   <StackPanel>
@@ -11,23 +12,23 @@
     <StackPanel Orientation="Horizontal">
       <TextBox Text="{Binding SelectedFolder}"
                Classes="folder"
-               Watermark="Choose or enter a folder"/>
+               Watermark="{x:Static ast:Strings.View_ChooseOrEnterFolder}"/>
 
-      <Button Content="..."
+      <Button Content="{x:Static ast:Strings.View_Btn_ChooseFolder}"
               Command="{Binding CmdChooseFolder}"/>
 
-      <Button Content="Add"
+      <Button Content="{x:Static ast:Strings.View_Btn_Add}"
               Command="{Binding CmdAddFolder}"/>
     </StackPanel>
 
     <StackPanel Orientation="Horizontal">
-      <Button Content="Refresh"
+      <Button Content="{x:Static ast:Strings.View_Btn_Refresh}"
             Command="{Binding CmdListPackages}"/>
 
-      <Button Content="Remove selected folders"
+      <Button Content="{x:Static ast:Strings.View_Btn_RemoveSelectedFolders}"
               Command="{Binding CmdRemoveFolders}"/>
 
-      <!--<Button Content="Push selected packages"
+      <!--<Button Content="{x:Static ast:View_Btn_PushSelectedPackages}"
               Command="{Binding CmdPushPackages}"/>-->
     </StackPanel>
 
