@@ -14,6 +14,7 @@ namespace Andromeda.Tools.Avalonia.Themes.ViewModels
         {
             Themes = [
                 new(AvailableThemes.Fluent, "Fluent"),
+                new(AvailableThemes.Simple, "Simple"),
             ];
 
             ThemeVariants = [
@@ -40,12 +41,14 @@ namespace Andromeda.Tools.Avalonia.Themes.ViewModels
                         _ => ThemeVariant.Default,
                     };
 
-                    return x.Item1?.Value switch
+                    return (IThemePreview?)(x.Item1?.Value switch
                     {
                         AvailableThemes.Fluent
                             => new FluentViewModel(variant),
+                        AvailableThemes.Simple
+                            => new SimpleViewModel(variant),
                         _ => null
-                    };
+                    });
                 })
                 .ToPropertyEx(this, vm => vm.Content);
         }
