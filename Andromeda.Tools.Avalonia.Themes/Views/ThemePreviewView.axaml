@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:abs="using:Andromeda.Tools.Avalonia.Themes.Abstractions"
+             x:Class="Andromeda.Tools.Avalonia.Themes.Views.ThemePreviewView"
+             x:DataType="abs:IThemePreview">
+  <Grid ColumnDefinitions="Auto,Auto">
+    <ItemsControl ItemsSource="{Binding Colors}"
+                  Grid.Column="0">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Found}"
+                      IsEnabled="False"/>
+            <Border BorderBrush="Black"
+                    BorderThickness="2">
+              <Border BorderBrush="White"
+                      BorderThickness="2">
+                <Border Width="40"
+                        Height="40">
+                  <Border.Background>
+                    <SolidColorBrush Color="{Binding Color}"/>
+                  </Border.Background>
+                </Border>
+              </Border>
+            </Border>
+            <SelectableTextBlock Text="{Binding Name}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <ItemsControl ItemsSource="{Binding Brushes}"
+                  Grid.Column="1">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Found}"
+                      IsEnabled="False"/>
+            <Border BorderBrush="Black"
+                    BorderThickness="2">
+              <Border BorderBrush="White"
+                      BorderThickness="2">
+                <Border Width="40"
+                        Height="40"
+                        Background="{Binding Brush}"/>
+              </Border>
+            </Border>
+            <StackPanel>
+              <SelectableTextBlock Text="{Binding Name}"/>
+              <SelectableTextBlock Text="{Binding Type}"/>
+            </StackPanel>
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </Grid>
+</UserControl>

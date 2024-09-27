@@ -1,0 +1,66 @@
+using Andromeda.Tools.Avalonia.Themes.Abstractions;
+using Andromeda.Tools.Avalonia.Themes.Models;
+using Avalonia.Styling;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System.Collections.Generic;
+using System.Reactive.Linq;
+
+namespace Andromeda.Tools.Avalonia.Themes.ViewModels
+{
+    internal class MainViewModel : ViewModelBase
+    {
+        public MainViewModel()
+        {
+            Themes = [
+                new(AvailableThemes.Fluent, "Fluent"),
+            ];
+
+            ThemeVariants = [
+                new(AvailableThemeVariants.Light, "Light"),
+                new(AvailableThemeVariants.Dark, "Dark"),
+            ];
+
+            this
+                .WhenAnyValue(
+                    vm => vm.SelectedTheme,
+                    vm => vm.SelectedThemeVariant
+                )
+                .Select(x => {
+                    if (x.Item1 is null || x.Item2 is null)
+                    {
+                        return null;
+                    }
+
+                    var variant = x.Item2.Value switch
+                    {
+                        AvailableThemeVariants.Light => ThemeVariant.Light,
+                        AvailableThemeVariants.Dark => ThemeVariant.Dark,
+                        AvailableThemeVariants.Default => ThemeVariant.Default,
+                        _ => ThemeVariant.Default,
+                    };
+
+                    return x.Item1?.Value switch
+                    {
+                        AvailableThemes.Fluent
+                            => new FluentViewModel(variant),
+                        _ => null
+                    };
+                })
+                .ToPropertyEx(this, vm => vm.Content);
+        }
+
+        [ObservableAsProperty]
+        public IThemePreview? Content { get; }
+
+        [Reactive]
+        public ThemeInfo? SelectedTheme { get; set; }
+
+        [Reactive]
+        public ThemeVariantInfo? SelectedThemeVariant { get; set; }
+
+        public IEnumerable<ThemeInfo> Themes { get; }
+
+        public IEnumerable<ThemeVariantInfo> ThemeVariants { get; }
+    }
+}

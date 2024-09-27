@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:Andromeda.Tools.Avalonia.Themes.ViewModels"
+             x:Class="Andromeda.Tools.Avalonia.Themes.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
+      <TextBlock Text="Theme"/>
+      
+      <ComboBox ItemsSource="{Binding Themes}"
+                SelectedItem="{Binding SelectedTheme}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      
+      <TextBlock Text="Theme variant"/>
+      
+      <ComboBox ItemsSource="{Binding ThemeVariants}"
+                SelectedItem="{Binding SelectedThemeVariant}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </StackPanel>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto"
+                  Grid.Row="1">
+      <ContentControl Content="{Binding Content}"/>
+    </ScrollViewer>
+  </Grid>
+</UserControl>
