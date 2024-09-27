@@ -1,9 +1,11 @@
 using Andromeda.Tools.Avalonia.Themes.Abstractions;
 using Andromeda.Tools.Avalonia.Themes.Models;
+using Avalonia.Media;
 using Avalonia.Styling;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 
 namespace Andromeda.Tools.Avalonia.Themes.ViewModels
@@ -21,6 +23,18 @@ namespace Andromeda.Tools.Avalonia.Themes.ViewModels
                 new(AvailableThemeVariants.Light, "Light"),
                 new(AvailableThemeVariants.Dark, "Dark"),
             ];
+
+            AllColors = typeof(Colors)
+                .GetProperties()
+                .Select(p => {
+                    var color = (Color?)p.GetValue(null);
+                    if (color is null)
+                    {
+                        return null;
+                    }
+                    return new DefaultColorInfo(new SolidColorBrush(color.Value), p.Name);
+                })
+                .Where(x => x is not null)!;
 
             this
                 .WhenAnyValue(
@@ -65,5 +79,7 @@ namespace Andromeda.Tools.Avalonia.Themes.ViewModels
         public IEnumerable<ThemeInfo> Themes { get; }
 
         public IEnumerable<ThemeVariantInfo> ThemeVariants { get; }
+
+        public IEnumerable<DefaultColorInfo> AllColors { get; }
     }
 }

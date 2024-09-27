@@ -6,36 +6,58 @@
              xmlns:vm="using:Andromeda.Tools.Avalonia.Themes.ViewModels"
              x:Class="Andromeda.Tools.Avalonia.Themes.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Grid RowDefinitions="Auto,*">
-    <StackPanel Orientation="Horizontal"
-                Grid.Row="0">
-      <TextBlock Text="Theme"/>
-      
-      <ComboBox ItemsSource="{Binding Themes}"
-                SelectedItem="{Binding SelectedTheme}">
-        <ComboBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding Name}"/>
-          </DataTemplate>
-        </ComboBox.ItemTemplate>
-      </ComboBox>
-      
-      <TextBlock Text="Theme variant"/>
-      
-      <ComboBox ItemsSource="{Binding ThemeVariants}"
-                SelectedItem="{Binding SelectedThemeVariant}">
-        <ComboBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding Name}"/>
-          </DataTemplate>
-        </ComboBox.ItemTemplate>
-      </ComboBox>
-    </StackPanel>
+  <TabControl>
+    <TabItem Header="Themes">
+      <Grid RowDefinitions="Auto,*">
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0">
+          <TextBlock Text="Theme"/>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto"
-                  Grid.Row="1">
-      <ContentControl Content="{Binding Content}"/>
-    </ScrollViewer>
-  </Grid>
+          <ComboBox ItemsSource="{Binding Themes}"
+                    SelectedItem="{Binding SelectedTheme}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Name}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+
+          <TextBlock Text="Theme variant"/>
+
+          <ComboBox ItemsSource="{Binding ThemeVariants}"
+                    SelectedItem="{Binding SelectedThemeVariant}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Name}"/>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      Grid.Row="1">
+          <ContentControl Content="{Binding Content}"/>
+        </ScrollViewer>
+      </Grid>
+    </TabItem>
+
+    <TabItem Header="Colors">
+      <ItemsControl ItemsSource="{Binding AllColors}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border Height="50" Background="{Binding Brush}">
+              <TextBlock Text="{Binding Name}"/>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </TabItem>
+  </TabControl>
 </UserControl>
