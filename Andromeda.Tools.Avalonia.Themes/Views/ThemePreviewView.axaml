@@ -50,7 +50,8 @@
             </Border>
             <StackPanel>
               <SelectableTextBlock Text="{Binding Name}"/>
-              <SelectableTextBlock Text="{Binding Type}"/>
+              <SelectableTextBlock Text="{Binding Type, StringFormat='[{0}]', TargetNullValue=''}"
+                                   Foreground="{DynamicResource SystemBaseMediumLowColor}"/>
             </StackPanel>
           </StackPanel>
         </DataTemplate>
