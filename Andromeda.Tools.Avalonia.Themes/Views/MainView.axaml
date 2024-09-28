@@ -52,8 +52,11 @@
 
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border Height="50" Background="{Binding Brush}">
-              <TextBlock Text="{Binding Name}"/>
+            <Border Height="65"
+                    Background="{Binding Brush}">
+              <TextBlock Text="{Binding Name}"
+                         Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                         VerticalAlignment="Top"/>
             </Border>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
